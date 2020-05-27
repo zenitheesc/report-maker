@@ -1,6 +1,0 @@
-[submodule "Statistics.git"]
-	path = Statistics.git
-	url = https://github.com/mairacanal/Report-Maker.git
-[submodule "DataParser.git"]
-	path = DataParser.git
-	url = https://github.com/leocelente/report-maker
