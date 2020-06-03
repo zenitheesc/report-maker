@@ -4,8 +4,8 @@ import json
 import main
 
 
-in_filename = 'C:\\Users\\jorge\\Documents\\GitHub\\Report_Maker\\Parser.git\\my_log.log'
-ls_filename = 'C:\\Users\\jorge\\Documents\\GitHub\\Report_Maker\\Parser.git\\my_line_structure.json'
+in_filename = 'my_log.log'
+ls_filename = 'my_line_structure.json'
 out_filename = "output.csv"
 
 with open(in_filename, 'r') as in_file:
