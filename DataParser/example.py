@@ -19,7 +19,7 @@ x = parser.parse_line(line)
 print("Single Line:\n" + str(x))
 
 ## FILE PARSING
-all_data = parser.parse_file('C:\\Users\\jorge\\Documents\\GitHub\\Report_Maker\\Parser.git\\my_log.log')
+all_data = parser.parse_file('my_log.log')
 print("\nFull File: \n" + str(all_data))
 
 ##GENERATE STATISTICS
