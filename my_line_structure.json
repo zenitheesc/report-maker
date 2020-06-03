@@ -1,0 +1,7 @@
+{
+        "my_date": "date",
+        "my_int": "integer",
+        "my_float": "float",
+        "my_str": "str",
+        "separator" : ";"
+    }
