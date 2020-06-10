@@ -6,4 +6,4 @@ Open-source software developed to ease the creation of reports related to the gr
   Back-end:
     Data_Parser: Leonardo Celente.
     Statistics: Maíra Canal.
-   
+   Latex_Generator: Jorge M Risco
