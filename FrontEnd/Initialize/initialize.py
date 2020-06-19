@@ -5,7 +5,7 @@ class Initialize:
     def __init__(self, master):
 
         # Window configuration ---------------------------------------------------------------------------------------------------
-        self.zenith_logo_render = PhotoImage(file='c:/Users/Operador/Downloads/USP/ZENITH/REPORT MAKER/Códigos/IMAGES/LogoZ.png')
+        self.zenith_logo_render = PhotoImage(file='./IMAGES/LogoZ.png')
 
         self.master = master
         self.master.geometry("1000x680")
@@ -21,7 +21,7 @@ class Initialize:
         # Create a sequence of frames in a list that corresponds to the gif
         self.sequence = [ImageTk.PhotoImage(img)
                             for img in ImageSequence.Iterator(
-                                    Image.open(r'c:/Users/Operador/Downloads/USP/ZENITH/REPORT MAKER/Códigos/IMAGES/initialize.gif'))]
+                                    Image.open(r'./IMAGES/initialize.gif'))]
         self.image = self.canvas.create_image(500, 340, anchor=CENTER, image=self.sequence[0])
 
         self.animate(1)
