@@ -15,19 +15,17 @@ class Window1:
 
     def __init__ (self, master, root):
 
-        # -----------------------------------------------------------------------------------------------------------------------------------
         self.master = master
         self.root = root
         
          # Zenith's logo render
-        self.zenith_label_render = PhotoImage(file='c:/Users/Operador/Downloads/USP/ZENITH/REPORT MAKER/Códigos/IMAGES/zenith-faixa.png')
+        self.zenith_label_render = PhotoImage(file='../IMAGES/zenith-faixa.png')
 
         # Define text fontstyle
         fontStyle = tkFont.Font(
                         family="Helvetica", 
                         size=10, 
                         weight="bold")
-        # -----------------------------------------------------------------------------------------------------------------------------------
     
         content = Frame (master, width=450, height=650, background="black")
 
