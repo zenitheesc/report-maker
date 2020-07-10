@@ -94,7 +94,6 @@ class Window1:
         foldername = filedialog.askdirectory()
         if not foldername == "":
             self.folderName.set(foldername)
-            print()
             self.cuttedFoldername.set(foldername[0:44]+'...')
 
     def addField(self):
@@ -169,4 +168,4 @@ class Window1:
     def window1_to_window2(self):
         window2Frame = Frame (self.root, bg="Black")
         switch_frame (self.master, window2Frame)
-        window2 = Window2(window2Frame, self.root)
+        window2 = Window2(window2Frame, self.root, self.folderName.get())

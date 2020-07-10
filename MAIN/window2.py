@@ -1,11 +1,12 @@
 from tkinter import *
 import tkinter.font as tkFont
+import os
 
 from widgets import Title, TextConteiner, StandardButton, FontStyle
 
 # Represents all the second window
 class Window2:
-    def __init__ (self, master, root):
+    def __init__ (self, master, root, path):
 
         # Zenith's logo render
         self.zenith_label_render = PhotoImage(file='c:/Users/Operador/Downloads/USP/ZENITH/REPORT MAKER/Códigos/IMAGES/zenith-faixa.png')
@@ -13,6 +14,7 @@ class Window2:
         # Window's customize
         self.master = master
         self.root = root
+        self.path = path
 
         # All widgets definition
         ButtonFinish = StandardButton(frame=self.master, text="Finish", command= self.PyLaTex_function)
@@ -65,6 +67,5 @@ class Window2:
         section2_text = self.SectionText2.get_text()
         section3_text = self.SectionText3.get_text()
 
-
         self.root.destroy()
-        
+        os.startfile(self.path)
