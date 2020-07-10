@@ -29,7 +29,7 @@ def outliers_clean (data, sorted_data):
 # Generic function to generate line plot graphics of a dataType in function of the another dataType
 # Examples: Temperature x Time; Pressure x Time
 
-def generate_data_x_data (data, data2, dataType, dataType2):
+def generate_data_x_data (data, data2, dataType, dataType2, path):
     print(dataType, len(data),dataType2, len(data2))
     if pd.Series(data).is_unique == False:
         return -1                            
@@ -49,7 +49,7 @@ def generate_data_x_data (data, data2, dataType, dataType2):
         plt.ylabel(f"{dataType}")
 
         # Save graph
-        plt.savefig(f'graph_{dataType}_x_{dataType2}.png', dpi=96, bbox_inches='tight')
+        plt.savefig(f'{path}/graph_{dataType}_x_{dataType2}.png', dpi=96, bbox_inches='tight')
         plt.clf()
         return 1
 

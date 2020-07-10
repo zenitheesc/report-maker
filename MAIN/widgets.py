@@ -30,18 +30,13 @@ class WindowConfig:
 # Define a button design
 class StandardButton:
     def __init__ (self, frame, text, command):
-        fontStyle = tkFont.Font(
-                        family="Helvetica", 
-                        size=10, 
-                        weight="bold")
-
         self.standardButton = Button(frame, 
                                 text=text, 
                                 bg="black", 
                                 fg="white", 
                                 width=8, 
                                 padx=5, 
-                                font=fontStyle,
+                                font=FontStyle.get(),
                                 command= command)
 
     def grid (self, row, column, padx, pady, *args, **kwargs):
@@ -50,14 +45,14 @@ class StandardButton:
 
 # Sets the title's entry
 class Title:
-    def __init__ (self, master, fontStyle, name_title, row):
+    def __init__ (self, master, name_title, row):
         self.master = master
 
         TitleLabel = Label( self.master,
                             text= name_title,
                             bg="black",
                             fg="white",
-                            font=fontStyle)
+                            font=FontStyle.get())
         self.TitleEntry = Entry (self.master,
                                  width = 133)   
 
@@ -104,6 +99,13 @@ class TextConteiner:
     def get_text (self):
         text = self.TextArea.get("1.0", END)
         return text
+
+# Define a font pattern
+class FontStyle:
+    def __init__ (self):
+        pass
+    def get():
+        return tkFont.Font(family="Helvetica", size=10, weight="bold")
 
 # ------------------------------------------------------------------------------------------------------------------
 # FUNCTIONS --------------------------------------------------------------------------------------------------------

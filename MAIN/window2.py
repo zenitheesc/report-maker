@@ -1,9 +1,7 @@
 from tkinter import *
 import tkinter.font as tkFont
 
-from widgets import Title
-from widgets import TextConteiner
-from widgets import StandardButton
+from widgets import Title, TextConteiner, StandardButton, FontStyle
 
 # Represents all the second window
 class Window2:
@@ -16,12 +14,6 @@ class Window2:
         self.master = master
         self.root = root
 
-        # Define text fontstyle
-        fontStyle = tkFont.Font(
-                        family="Helvetica", 
-                        size=10, 
-                        weight="bold")
-
         # All widgets definition
         ButtonFinish = StandardButton(frame=self.master, text="Finish", command= self.PyLaTex_function)
         ZenithLabel = Label(self.master, 
@@ -29,16 +21,16 @@ class Window2:
                             highlightthickness=0, 
                             borderwidth=0)
 
-        self.MainTitle =    Title (master, fontStyle, "Título" , 1)
-        self.SectionName1 = Title (master, fontStyle, "Seção 1", 2)
+        self.MainTitle =    Title (master, "Título" , 1)
+        self.SectionName1 = Title (master, "Seção 1", 2)
         Conteiner1 = Frame(master)
         self.SectionText1 = TextConteiner(Conteiner1, master)
 
-        self.SectionName2 = Title (master, fontStyle, "Seção 2", 4)
+        self.SectionName2 = Title (master, "Seção 2", 4)
         Conteiner2 = Frame(master)
         self.SectionText2 = TextConteiner(Conteiner2, master)
 
-        self.SectionName3 = Title (master, fontStyle, "Seção 3", 6)
+        self.SectionName3 = Title (master, "Seção 3", 6)
         Conteiner3 = Frame(master)
         self.SectionText3 = TextConteiner(Conteiner3, master)
 
@@ -49,7 +41,7 @@ class Window2:
         self.CheckBox = Checkbutton(master, 
                                     text="Inserir Imagens",
                                     variable = self.val_checkbox,
-                                    font= fontStyle,
+                                    font = FontStyle.get(),
                                     bg= "Black",
                                     fg= "White",
                                     selectcolor="Black")
