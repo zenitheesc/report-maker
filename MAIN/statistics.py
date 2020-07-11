@@ -65,7 +65,11 @@ def generate_data_x_data (data, data2, dataType, dataType2, path):
 # Generic function to generate line plot graphics comparing 3 dataType, which are correlated through time
 # Examples: Compare temp_int, temp_ext and temp_geral through time
 
-def generate_compare_graph (data1, data2, data3, time, dataType1, dataType2, dataType3, comparing_data):
+def generate_compare_graph (data1, data2, data3, time, dataType1, dataType2, dataType3, comparing_data, path):
+    # Cleaning outliers
+    data  = outliers_clean (data , np.sort(data))
+    data2 = outliers_clean (data2, np.sort(data2))
+    data3 = outliers_clean (data3, np.sort(data3))
 
     df = pd.DataFrame(list(zip(data1, data2, data3, time)), columns= [f'{dataType1}', f'{dataType2}', f'{dataType3}', 'Time'])
 
@@ -86,34 +90,40 @@ def generate_compare_graph (data1, data2, data3, time, dataType1, dataType2, dat
     plt.ylabel(f"{comparing_data}")
 
     # Save graph
-    plt.savefig(f'graph_compare_{comparing_data}.png', dpi=96, bbox_inches='tight')
+    if (os.path.isdir(path + "/IMAGES") == False):
+        os.makedirs(path + "/IMAGES")
+    plt.savefig(f'{path}/IMAGES/graph_compare_{comparing_data}.png', dpi=96, bbox_inches='tight')
     plt.clf()
 
 # ----------------------------------------------------------------------------------------------
 
 # Generates a map using latitude and longitude data
 
-def generate_map (latitude, longitude):
+def generate_map (latitude, longitude, path):
 
     df = pd.DataFrame(list(zip(latitude, longitude)), columns= ['Latitude', 'Longitude'])
 
     # Create a map
-    map = fl.Map(location=[-22.5254886, -45.8804367], tiles="OpenStreetMap", zoom_start=9)
+    map = fl.Map(location=[-21.9808416, -47.7506511], tiles="OpenStreetMap", zoom_start=9)
 
     # Mark all coordinates
     for row in range(0,len(df)):
         fl.CircleMarker((df.loc[row, 'Latitude'], df.loc[row, 'Longitude']), radius=7, weight=5, color='red', fill_color='red', fill_opacity=.5).add_to(map)
 
-    # Save the map as an html    
-    map.save('Map.html')
+    # Save the map as an html 
+    if (os.path.isdir(path + "/IMAGES") == False):
+        os.makedirs(path + "/IMAGES")   
+    map.save(f'{path}/IMAGES/Map.html')
 
     # Open a browser window to display the html file and screenshot the map
 
-    driver = selenium.webdriver.PhantomJS()
+    driver = selenium.webdriver.Chrome(os.path.join(os.path.dirname(__file__), "DEPENDENCES/chromedriver.exe"))
     driver.set_window_size(4000, 3000) 
-    driver.get('map.html')
+    driver.get(f'{path}/IMAGES/Map.html')
     sleep(5)
-    driver.save_screenshot('map.png')
+
+    driver.save_screenshot(f'{path}/IMAGES/map.png')
+    driver.quit()
 
 # ----------------------------------------------------------------------------------------------
 

@@ -55,7 +55,7 @@ class Title:
     def __init__ (self, master, name_title, row):
         self.master = master
 
-        TitleLabel      = Label(self.master, text= name_title, bg="black", fg="white", font=FontStyle.get())
+        TitleLabel      = Label (self.master, text= name_title, bg="black", fg="white", font=FontStyle.get())
         self.TitleEntry = Entry (self.master, width = 133)   
 
         TitleLabel.grid      (row=row, column=0, padx=12)
@@ -97,24 +97,28 @@ class FontStyle:
 # ------------------------------------------------------------------------------------------------------------------
 # FUNCTIONS --------------------------------------------------------------------------------------------------------
 
+# Makes the transition between windows
 def switch_frame(actualFrame, nextFrame):
     if actualFrame is not None:
         actualFrame.destroy()
     actualFrame = nextFrame
     actualFrame.pack (fill=BOTH)
 
+# Generates a zip file containing the Report in TeX file format
 def PyLaTex_generator(title, section1, section1Title, section2, section2Title, section3, section3Title, path, includeImages):
 
     now = datetime.datetime.now()
 
+    # Defines the file folder path and the dependences folder path
     filepath = (path + r"/OUTPUT")
     if (os.path.isdir(filepath) == False):
         os.makedirs(filepath)
 
     dependencesPath = (path + r"/DEPENDENCES")
     if (os.path.isdir(dependencesPath) == False):
-            os.makedirs(dependencesPath)
+        os.makedirs(dependencesPath)
 
+    # Write the LaTex report
     doc = Document(filepath)
     doc.documentclass = Command(
             'documentclass',
@@ -133,46 +137,63 @@ def PyLaTex_generator(title, section1, section1Title, section2, section2Title, s
     doc.append(section2)
     doc.append(NoEscape(r'\section{'+ section3Title + '}'))
     doc.append(section3)
-    if (includeImages == True):
+
+    # Include all images in the report
+    if (includeImages == True and os.listdir(path + r"/IMAGES") == True):
         doc.append(NoEscape(r'\section{Dados}'))
         c = 1
         imageComand = ""
-
         imagesPath = path + r"/IMAGES"
+
         for image in os.listdir(imagesPath):
-            if os.path.isfile(os.path.join(imagesPath, image)):
-                splittedGraphName = re.split("_", image[:-4])
-                caption = f"Gráfico {splittedGraphName[1]} versus {splittedGraphName[3]}"
-                if c == 4:
-                    imageComand = imageComand + r"    \subfloat[" + caption + r"]{\includegraphics[width = 1.5in]{" + r"IMAGES/" + image + r"}}\\" + "\n"
-                    c = 1
-                else: 
-                    imageComand = imageComand + r"    \subfloat[" + caption + r"]{\includegraphics[width = 1.5in]{" + r"IMAGES/" + image + r"}} &" + "\n"
-                    c = c + 1
+
+            if image == "map.png":
+                doc.append(NoEscape(r"""
+    \begin{figure}[htb]
+        \centering
+            \includegraphics[scale=0.30]{""" + r"IMAGES/" + image + r"""}
+            \caption{Trajetória da sonda sobre o região de São Carlos}    
+    \end{figure}
+            """))
+
+            elif image == "Map.html":
+                pass
+            
+            else:
+                if os.path.isfile(os.path.join(imagesPath, image)):
+                    splittedGraphName = re.split("_", image[:-4])
+                    caption = f"Gráfico {splittedGraphName[1]} versus {splittedGraphName[3]}"
+                    if c == 4:
+                        imageComand = imageComand + r"    \subfloat[" + caption + r"]{\includegraphics[width = 1.5in]{" + r"IMAGES/" + image + r"}}\\" + "\n"
+                        c = 1
+                    else: 
+                        imageComand = imageComand + r"    \subfloat[" + caption + r"]{\includegraphics[width = 1.5in]{" + r"IMAGES/" + image + r"}} &" + "\n"
+                        c = c + 1
 
         doc.append(NoEscape(r"""
     \begin{figure}[htb]
-    \centering
-        \begin{tabular}{cccc}
-    """
-        + "\n" + imageComand +
-        r"""
-        \end{tabular}
-        \caption{Gráficos}    
+        \centering
+            \begin{tabular}{cccc}
+        """
+            + "\n" + imageComand +
+            r"""
+            \end{tabular}
+            \caption{Gráficos}    
     \end{figure}
-        """))
+            """))
 
     filename=(r"zenith_report_{dia}-{mes}-{ano}".format(dia=now.day, mes=now.month, ano=now.year))
     doc.generate_tex(r"{filepath}/{filename}".format(filepath=filepath, filename=filename))
     
-    # Copying dependence files
+    # Copy dependence files
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "DEPENDENCES/preamble.tex"), dependencesPath)
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "DEPENDENCES/IMAGES/LogoZ.png"), dependencesPath)
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "DEPENDENCES/IMAGES/zenith-faixa.png"), dependencesPath)
 
-    #creating the zipfile
+    # Creates a zip file
     make_archive(filename, path, path + "/" + filename + ".zip")
 
+# Generates a zip file
 def make_archive(name, source, destination):
     base = os.path.basename(destination)
     format = base.split('.')[1]

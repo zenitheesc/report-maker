@@ -20,7 +20,6 @@ class Window1:
         self.root = root
         
         # Zenith's logo render
-
         self.zenithLabelRender = PhotoImage(file=os.path.join(os.path.dirname(__file__), "DEPENDENCES/IMAGES/zenith-faixa.png"))
     
         content = Frame (master, width=450, height=650, background="black")
@@ -158,12 +157,21 @@ class Window1:
         
     def generateStatistics(self, all_data):
         while(True):
-            strPlots = simpledialog.askstring(title="Graph", prompt="Graphs: (empty to stop)",)
+            dialogScript = "Escolha os gráficos que você deseja inserir no relatório.\n(a) Para gerar um gráfico 'x' versus 'y', digite: x,y\n(b) Para gerar um mapa, digite: latitude,longitude\nPara ir para próxima janela, deixe o campo vazio."
+
+            strPlots = simpledialog.askstring(title="Graph", prompt=dialogScript)
             if strPlots == '':
                 self.window1_to_window2()
                 break
             plots = strPlots.split(',')
-            g = statistics.generate_data_x_data(all_data[plots[0]], all_data[plots[1]], plots[0], plots[1], self.folderName.get())
+
+            if "latitude" in plots and "longitude" in plots:
+                if plots[0] == "latitude":
+                    statistics.generate_map(all_data[plots[0]], all_data[plots[1]], self.folderName.get())
+                else:
+                    statistics.generate_map(all_data[plots[1]], all_data[plots[2]], self.folderName.get())
+            else:
+                g = statistics.generate_data_x_data(all_data[plots[0]], all_data[plots[1]], plots[0], plots[1], self.folderName.get())
 
     def window1_to_window2(self):
         window2Frame = Frame (self.root, bg="Black")
