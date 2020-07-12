@@ -139,7 +139,7 @@ def PyLaTex_generator(title, section1, section1Title, section2, section2Title, s
     doc.append(section3)
 
     # Include all images in the report
-    if (includeImages == True and os.listdir(path + r"/IMAGES") == True):
+    if (includeImages == True and os.path.isdir(path + r"/IMAGES") == True):
         doc.append(NoEscape(r'\section{Dados}'))
         c = 1
         imageComand = ""
@@ -158,7 +158,7 @@ def PyLaTex_generator(title, section1, section1Title, section2, section2Title, s
 
             elif image == "Map.html":
                 pass
-            
+
             else:
                 if os.path.isfile(os.path.join(imagesPath, image)):
                     splittedGraphName = re.split("_", image[:-4])
