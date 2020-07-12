@@ -1,6 +1,7 @@
 from pylatex import Document, Section, Subsection, Command
 from pylatex.utils import italic, NoEscape
 from pylatex.package import Package
+from zipfile import ZipFile
 import shutil
 import datetime
 import os
@@ -190,14 +191,26 @@ def PyLaTex_generator(title, section1, section1Title, section2, section2Title, s
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "DEPENDENCES/IMAGES/LogoZ.png"), dependencesPath)
     shutil.copy(os.path.join(os.path.dirname(os.path.abspath(__file__)), "DEPENDENCES/IMAGES/zenith-faixa.png"), dependencesPath)
 
-    # Creates a zip file
-    make_archive(filename, path, path + "/" + filename + ".zip")
+    # make_archive(filename, path, path + "/" + filename + ".zip")
 
-# Generates a zip file
-def make_archive(name, source, destination):
+    # Creates a zip file
+    directoriesList = [path + "/DEPENDENCES", path + "/IMAGES", path + "/OUTPUT"]
+    zip_files(directoriesList, path + "/" + filename + ".zip")
+
+'''def make_archive(name, source, destination):
     base = os.path.basename(destination)
     format = base.split('.')[1]
     archiveFrom = os.path.dirname(source)
     archiveTo = os.path.basename(source.strip(os.sep))
     shutil.make_archive(name, format, archiveFrom, archiveTo)
-    shutil.move('%s.%s'%(name,format), destination)
+    shutil.move('%s.%s'%(name,format), destination) '''
+
+# Generates a zip file
+def zip_files(dirName, zipFileName):
+   with ZipFile(zipFileName, 'w') as zipObj:
+        for directory in dirName:
+            for folderName, subfolders, filenames in os.walk(directory):
+                for filename in filenames:
+                    folder = directory.split("/")
+                    filePath = os.path.join(directory, filename)
+                    zipObj.write(filePath, folder[-1] + "/" + filename)
