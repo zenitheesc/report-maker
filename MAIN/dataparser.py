@@ -118,7 +118,7 @@ class DataParser:
         '''
             Casts a single variable to the type specified in the line structure
         '''
-        if(self._structure[to_type] == "integer"):
+        if(self._structure[to_type] == "integer" or self._structure[to_type] == "int"):
             return int(var)
         elif(self._structure[to_type] == "float"):
             return float(var)

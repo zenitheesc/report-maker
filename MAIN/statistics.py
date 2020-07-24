@@ -32,13 +32,14 @@ def outliers_clean (data, sorted_data):
 
 def generate_data_x_data (data, data2, dataType, dataType2, path):
     # print(dataType, len(data),dataType2, len(data2))
-    if pd.Series(data).is_unique == False:
-        return -1                            
+    if pd.Series(data).is_unique == True and False:
+        pass
+    #     return -1                            
 
     else:
         # Cleaning outliers
-        data  = outliers_clean (data , np.sort(data))
-        data2 = outliers_clean (data2, np.sort(data2))
+        # data  = outliers_clean (data , np.sort(data))
+        # data2 = outliers_clean (data2, np.sort(data2))
 
         df = pd.DataFrame(list(zip(data, data2)), columns= [f'{dataType}', f'{dataType2}'])
         
@@ -56,7 +57,7 @@ def generate_data_x_data (data, data2, dataType, dataType2, path):
         # Save graph
         if (os.path.isdir(path + "/IMAGES") == False):
             os.makedirs(path + "/IMAGES")
-        plt.savefig(f'{path}/IMAGES/graph_{dataType}_x_{dataType2}.png', dpi=96, bbox_inches='tight')
+        plt.savefig(f'{path}/IMAGES/graph_{dataType}_x_{dataType2}.png', dpi=4*96, bbox_inches='tight')
         plt.clf()
         return 1
 
@@ -66,10 +67,10 @@ def generate_data_x_data (data, data2, dataType, dataType2, path):
 # Examples: Compare temp_int, temp_ext and temp_geral through time
 
 def generate_compare_graph (data1, data2, data3, time, dataType1, dataType2, dataType3, comparing_data, path):
-    # Cleaning outliers
-    data  = outliers_clean (data , np.sort(data))
-    data2 = outliers_clean (data2, np.sort(data2))
-    data3 = outliers_clean (data3, np.sort(data3))
+    # # Cleaning outliers
+    # data  = outliers_clean (data , np.sort(data))
+    # data2 = outliers_clean (data2, np.sort(data2))
+    # data3 = outliers_clean (data3, np.sort(data3))
 
     df = pd.DataFrame(list(zip(data1, data2, data3, time)), columns= [f'{dataType1}', f'{dataType2}', f'{dataType3}', 'Time'])
 
@@ -92,7 +93,7 @@ def generate_compare_graph (data1, data2, data3, time, dataType1, dataType2, dat
     # Save graph
     if (os.path.isdir(path + "/IMAGES") == False):
         os.makedirs(path + "/IMAGES")
-    plt.savefig(f'{path}/IMAGES/graph_compare_{comparing_data}.png', dpi=96, bbox_inches='tight')
+    plt.savefig(f'{path}/IMAGES/graph_compare_{comparing_data}.png', dpi=4*96, bbox_inches='tight')
     plt.clf()
 
 # ----------------------------------------------------------------------------------------------

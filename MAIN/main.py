@@ -14,3 +14,4 @@ if __name__ == "__main__":
     config = WindowConfig(root, 1000, 680)
     initialize(root)
     root.mainloop()
+    exit()

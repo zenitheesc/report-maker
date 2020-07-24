@@ -1,6 +1,6 @@
 from tkinter import *
 import tkinter.font as tkFont
-import os
+import os,sys, subprocess
 
 from widgets import Title, TextConteiner, StandardButton, FontStyle
 from widgets import PyLaTex_generator
@@ -67,4 +67,6 @@ class Window2:
         PyLaTex_generator (maintitle, section1_text, section1_title, section2_text, section2_title, section3_text, section3_title, self.path, self.valCheckBox.get())
 
         self.root.destroy()
-        os.startfile(self.path)
+        # os.startfile(self.path)
+        opener ="open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, self.path])
