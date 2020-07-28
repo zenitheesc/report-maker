@@ -1,4 +1,4 @@
-tkinter
+tk-tools
 Pillow
 pandas
 matplotlib
@@ -7,5 +7,5 @@ numpy
 folium
 selenium
 pylatex
-zipfile
-shutil
+zipfile38
+pytest-shutil
