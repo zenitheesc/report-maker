@@ -1,0 +1,11 @@
+tkinter
+Pillow
+pandas
+matplotlib
+seaborn
+numpy
+folium
+selenium
+pylatex
+zipfile
+shutil
