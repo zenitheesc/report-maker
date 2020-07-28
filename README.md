@@ -2,7 +2,7 @@
 ## How to use it?
 0. Download python3 (with pip).
 1. DOWNLOAD the folder MAIN
-2. If you're using windows just click on run.bat
+2. If you're using **Windows** just click on **Run.bat**.
 3. If you're using **another OS** or a **VIRTUAL ENVIRONMENT** such as **CONDA** use the following code to install the dependencies:
 
 `python -m pip install -r requirements.txt`
