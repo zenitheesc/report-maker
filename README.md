@@ -1,5 +1,5 @@
 # Report_Maker
-[Project Wiki](https://github.com/zenitheesc/Report_Maker/wiki)
+[Instalação](https://github.com/zenitheesc/Report_Maker/wiki)
 
 Open-source software developed to ease the creation of reports related to the group Zenith Aerospace (EESC-USP).
 
