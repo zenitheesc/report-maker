@@ -1,0 +1,12 @@
+{
+    "id": "integer",
+    "latitude": "float",
+    "longitude": "float",
+    "gps_alt": "float",
+    "gps_speed": "float",
+    "dht_humi": "float",
+    "dht_temp": "float",
+    "bmp_alt": "float",
+    "bmp_pressure": "float",
+    "bmp_temp": "float"
+}
