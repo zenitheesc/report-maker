@@ -12,6 +12,11 @@ from widgets import StandardButton, FontStyle
 from widgets import switch_frame
 from window2 import Window2
 import json
+dialogScript = '''Escolha os gráficos que você deseja inserir no relatório.\n\
+                (a) Para gerar um gráfico 'x' versus 'y', digite: x,y\n\
+                digite 'x,y,M,N' para limitar o grafico entre o intervalo M...N\n\
+                (b) Para gerar um mapa, digite: latitude,longitude\n\
+                    Para ir para próxima janela, deixe o campo vazio.'''
 
 
 class Window1:
@@ -30,6 +35,7 @@ class Window1:
         # frame = ttk.Frame(content, relief="sunken", width=800, height=600)
 
         # Variables
+
         self.tokenSeparator = StringVar(value=",")
         self.logFilename = StringVar()
         self.cuttedFilename = StringVar(value="<arquivo log>")
@@ -38,12 +44,7 @@ class Window1:
         self.parserString = StringVar()
         self.fieldString = StringVar()
         self.fields_list = StringVar()
-        l = ('a1:integer', 'a2:integer', 'latitude:float', 'longitude:float',
-             'a5:integer', 'a6:integer', 'a7:integer', 'a8:integer', 'a9:integer',
-             'a0:float', 'a10:float', 'a12:integer', 'a13:integer', 'altitude:float',
-             'a15:integer', 'a16:integer', 'a17:float', 'a18:integer', 'a19:integer',
-             'a20:integer', 'a21:integer', 'a22:integer', 'a23:integer', 'a24:str')
-        self.fields_list.set(())  # ('a:integer', 'b:float', 'c:str'))
+        self.fields_list.set(())
 
         # Component Creation
         ZenithLabel = Label(
@@ -136,9 +137,7 @@ class Window1:
         with open(json_file, 'r') as myfile:
             data = myfile.read()
         d = (json.loads(data))
-        print(d)
         idx = 0
-        # self.lbxFields.clear(())
         for i in d.keys():
             self.lbxFields.insert(idx, (i + ":" + d[i]))
             idx = idx + 1
@@ -198,48 +197,45 @@ class Window1:
 
     def generateStatistics(self, all_data):
         while(True):
-            dialogScript = "Escolha os gráficos que você deseja inserir no relatório.\n\
-                (a) Para gerar um gráfico 'x' versus 'y', digite: x,y\n\
-                digite 'x,y,M,N' para limitar o grafico entre o intervalo M...N\n\
-                (b) Para gerar um mapa, digite: latitude,longitude\n\
-                    Para ir para próxima janela, deixe o campo vazio."
 
             strPlots = simpledialog.askstring(
                 title="Graph", prompt=dialogScript)
             if strPlots == '':
                 self.window1_to_window2()
                 break
+
             plots = strPlots.split(',')
-            lowerbound = -214748364
-            upperbound = 2*214748364
+            if not len(all_data[plots[0]]) or not len(all_data[plots[1]]):
+                messagebox.showerror(
+                    title="Error", message="Check Column Name. No data found.")
+                continue
 
-            if len(plots) > 2:
+            lowerbound = float(-(2 ** 31))
+            upperbound = float((2 ** 32))
+            if len(plots) >= 3:
                 lowerbound = plots[2]
-
             if len(plots) == 4:
                 upperbound = plots[3]
-            # print(len(all_data[plots[0]]),len(all_data[plots[1]]))
-            if not len(all_data[plots[0]]) or not len(all_data[plots[1]]):
-                print("no data ")
-                continue
+            def bound(x): return (x if (x > float(lowerbound)
+                                        and x < float(upperbound)) else 0)
+
+            folder = self.folderName.get()
+            lat = 0
             if "latitude" in plots and "longitude" in plots:
-                if plots[0] == "latitude":
-                    statistics.generate_map(map(lambda x: x/10000, all_data[plots[0]]), map(
-                        lambda x: x/10000, all_data[plots[1]]), self.folderName.get())
-                else:
-                    statistics.generate_map(
-                        all_data[plots[1]], all_data[plots[0]], self.folderName.get())
+                if plots[0] == "longitude":  # is switched?
+                    lat = 1
+
+                def div_by_10k(x): return x/10000
+                statistics.generate_map(map(div_by_10k, all_data[plots[lat]]), map(
+                    div_by_10k, all_data[plots[not lat]]), folder)
             else:
-                def bound(x): return x if (x > float(lowerbound)
-                                           and x < float(upperbound)) else 0
-                print('upper: ', upperbound, ' lower: ', lowerbound)
+                print(type(all_data[plots[1]][0]))
+                print(type(lowerbound))
                 y = list(map(bound, all_data[plots[1]]))
-                print(len(y))
-                g = statistics.generate_data_x_data(
-                    y, all_data[plots[0]], plots[1], plots[0], self.folderName.get())
-                print(g)
+                statistics.generate_data_x_data(
+                    y, all_data[plots[0]], plots[1], plots[0], folder)
 
     def window1_to_window2(self):
         window2Frame = Frame(self.root, bg="Black")
         switch_frame(self.master, window2Frame)
-        window2 = Window2(window2Frame, self.root, self.folderName.get())
+        Window2(window2Frame, self.root, self.folderName.get())
