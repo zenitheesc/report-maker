@@ -76,7 +76,7 @@ If you find any sort of problem or have a suggestion to the project, please writ
 
 ### Developers
 
-| [<img src="https://github.com/jorgemrisco.png?size=115" width=115><br><sub>@jorgemrisco</sub>](https://github.com/jorgemrico) | [<img src="https://github.com/leocelente.png?size=115" width=115><br><sub>@leocelente</sub>](https://github.com/leocelente) | [<img src="https://github.com/mairacanal.png?size=115" width=115><br><sub>@mairacanal</sub>](https://github.com/mairacanal)
+| [<img src="https://github.com/jorgemrisco.png?size=115" width=115><br><sub>@jorgemrisco</sub>](https://github.com/jorgemrisco) | [<img src="https://github.com/leocelente.png?size=115" width=115><br><sub>@leocelente</sub>](https://github.com/leocelente) | [<img src="https://github.com/mairacanal.png?size=115" width=115><br><sub>@mairacanal</sub>](https://github.com/mairacanal)
 | :---: | :---: | :---: |
 ---
 
