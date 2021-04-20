@@ -47,7 +47,7 @@ In this project, our three main goals were:
 Moreover, all these goals should've been achieved in a user-friendly GUI. 
 
 Due to the versatility, we picked **Python** as your primary development language. Report Maker's parser was developed using regular expression (**RegEx**) knowledge. The statistics stage was developed with famous **data science** libraries such as Pandas, Matplotlib, and Numpy. This stage also made it possible to generate maps when the log has geographic coordinates. At last, the pylatex library was used to generate a **LaTeX** file. 
-As many Report Maker's users are not programmers, we built a GUI with a Pyhton native module, **Tkinter**.
+As many Report Maker's users are not programmers, we built a GUI with a Python native module, **Tkinter**.
 
 <div align='center'> 
     <img src='Report Maker.png' width='80%'/>
